@@ -558,6 +558,7 @@ status_t AudioSystem::setDeviceConnectionState(audio_devices_t device,
                                                const char *device_address)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     const char *address = "";
 
     if (aps == 0) return PERMISSION_DENIED;
@@ -573,6 +574,7 @@ audio_policy_dev_state_t AudioSystem::getDeviceConnectionState(audio_devices_t d
                                                   const char *device_address)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return AUDIO_POLICY_DEVICE_STATE_UNAVAILABLE;
 
     return aps->getDeviceConnectionState(device, device_address);
@@ -588,6 +590,7 @@ status_t AudioSystem::setPhoneState(audio_mode_t state)
 {
     if (uint32_t(state) >= AUDIO_MODE_CNT) return BAD_VALUE;
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
 
     return aps->setPhoneState(state);
@@ -596,6 +599,7 @@ status_t AudioSystem::setPhoneState(audio_mode_t state)
 status_t AudioSystem::setForceUse(audio_policy_force_use_t usage, audio_policy_forced_cfg_t config)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->setForceUse(usage, config);
 }
@@ -603,6 +607,7 @@ status_t AudioSystem::setForceUse(audio_policy_force_use_t usage, audio_policy_f
 audio_policy_forced_cfg_t AudioSystem::getForceUse(audio_policy_force_use_t usage)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return AUDIO_POLICY_FORCE_NONE;
     return aps->getForceUse(usage);
 }
@@ -616,6 +621,7 @@ audio_io_handle_t AudioSystem::getOutput(audio_stream_type_t stream,
                                     const audio_offload_info_t *offloadInfo)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return 0;
     return aps->getOutput(stream, samplingRate, format, channelMask, flags, offloadInfo);
 }
@@ -633,6 +639,7 @@ status_t AudioSystem::startOutput(audio_io_handle_t output,
                                   int session)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->startOutput(output, stream, session);
 }
@@ -642,6 +649,7 @@ status_t AudioSystem::stopOutput(audio_io_handle_t output,
                                  int session)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->stopOutput(output, stream, session);
 }
@@ -649,6 +657,7 @@ status_t AudioSystem::stopOutput(audio_io_handle_t output,
 void AudioSystem::releaseOutput(audio_io_handle_t output)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return;
     aps->releaseOutput(output);
 }
@@ -660,6 +669,7 @@ audio_io_handle_t AudioSystem::getInput(audio_source_t inputSource,
                                     int sessionId)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return 0;
     return aps->getInput(inputSource, samplingRate, format, channelMask, sessionId);
 }
@@ -667,6 +677,7 @@ audio_io_handle_t AudioSystem::getInput(audio_source_t inputSource,
 status_t AudioSystem::startInput(audio_io_handle_t input)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->startInput(input);
 }
@@ -674,6 +685,7 @@ status_t AudioSystem::startInput(audio_io_handle_t input)
 status_t AudioSystem::stopInput(audio_io_handle_t input)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->stopInput(input);
 }
@@ -681,6 +693,7 @@ status_t AudioSystem::stopInput(audio_io_handle_t input)
 void AudioSystem::releaseInput(audio_io_handle_t input)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return;
     aps->releaseInput(input);
 }
@@ -690,6 +703,7 @@ status_t AudioSystem::initStreamVolume(audio_stream_type_t stream,
                                     int indexMax)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->initStreamVolume(stream, indexMin, indexMax);
 }
@@ -699,6 +713,7 @@ status_t AudioSystem::setStreamVolumeIndex(audio_stream_type_t stream,
                                            audio_devices_t device)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->setStreamVolumeIndex(stream, index, device);
 }
@@ -708,6 +723,7 @@ status_t AudioSystem::getStreamVolumeIndex(audio_stream_type_t stream,
                                            audio_devices_t device)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->getStreamVolumeIndex(stream, index, device);
 }
@@ -715,6 +731,7 @@ status_t AudioSystem::getStreamVolumeIndex(audio_stream_type_t stream,
 uint32_t AudioSystem::getStrategyForStream(audio_stream_type_t stream)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return 0;
     return aps->getStrategyForStream(stream);
 }
@@ -722,6 +739,7 @@ uint32_t AudioSystem::getStrategyForStream(audio_stream_type_t stream)
 audio_devices_t AudioSystem::getDevicesForStream(audio_stream_type_t stream)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return (audio_devices_t)0;
     return aps->getDevicesForStream(stream);
 }
@@ -729,6 +747,7 @@ audio_devices_t AudioSystem::getDevicesForStream(audio_stream_type_t stream)
 audio_io_handle_t AudioSystem::getOutputForEffect(const effect_descriptor_t *desc)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->getOutputForEffect(desc);
 }
@@ -740,6 +759,7 @@ status_t AudioSystem::registerEffect(const effect_descriptor_t *desc,
                                 int id)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->registerEffect(desc, io, strategy, session, id);
 }
@@ -747,6 +767,7 @@ status_t AudioSystem::registerEffect(const effect_descriptor_t *desc,
 status_t AudioSystem::unregisterEffect(int id)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->unregisterEffect(id);
 }
@@ -754,6 +775,7 @@ status_t AudioSystem::unregisterEffect(int id)
 status_t AudioSystem::setEffectEnabled(int id, bool enabled)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     return aps->setEffectEnabled(id, enabled);
 }
@@ -761,6 +783,7 @@ status_t AudioSystem::setEffectEnabled(int id, bool enabled)
 status_t AudioSystem::isStreamActive(audio_stream_type_t stream, bool* state, uint32_t inPastMs)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     if (state == NULL) return BAD_VALUE;
     *state = aps->isStreamActive(stream, inPastMs);
@@ -771,6 +794,7 @@ status_t AudioSystem::isStreamActiveRemotely(audio_stream_type_t stream, bool* s
         uint32_t inPastMs)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     if (state == NULL) return BAD_VALUE;
     *state = aps->isStreamActiveRemotely(stream, inPastMs);
@@ -780,6 +804,7 @@ status_t AudioSystem::isStreamActiveRemotely(audio_stream_type_t stream, bool* s
 status_t AudioSystem::isSourceActive(audio_source_t stream, bool* state)
 {
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return PERMISSION_DENIED;
     if (state == NULL) return BAD_VALUE;
     *state = aps->isSourceActive(stream);
@@ -818,6 +843,7 @@ bool AudioSystem::isOffloadSupported(const audio_offload_info_t& info)
 {
     ALOGV("isOffloadSupported()");
     const sp<IAudioPolicyService>& aps = AudioSystem::get_audio_policy_service();
+    ALOGD("call get_audio_policy_service %s:%d", __FUNCTION__, __LINE__);
     if (aps == 0) return false;
     return aps->isOffloadSupported(info);
 }
@@ -884,6 +910,279 @@ extern "C" bool _ZN7android11AudioSystem17stopVoiceUnlockDLEv()
 extern "C" void _ZN7android15IATVCtrlService11asInterfaceERKNS_2spINS_7IBinderEEE()
 { 
 	return; 
+}
+
+
+typedef struct _AUDIO_VER1_CUSTOM_VOLUME_STRUCT {
+    unsigned char audiovolume_ring[4][15];
+    unsigned char audiovolume_sip[4][15];
+    unsigned char audiovolume_mic[4][15];
+    unsigned char audiovolume_fm[4][15];
+    unsigned char audiovolume_sph[4][15];
+    unsigned char audiovolume_sph2[4][15];
+    unsigned char audiovolume_sid[4][15];
+    unsigned char audiovolume_media[4][15];
+    unsigned char audiovolume_matv[4][15];
+
+    unsigned char normalaudiovolume[6];
+    unsigned char headsetaudiovolume[6];
+    unsigned char speakeraudiovolume[6];
+    unsigned char headsetspeakeraudiovolume[8];
+    unsigned char extampaudiovolume[6];
+
+    unsigned char audiovolume_level[9];
+} AUDIO_VER1_CUSTOM_VOLUME_STRUCT;
+
+extern "C" void  _ZN7android24GetVolumeVer1ParamFromASEP32_AUDIO_VER1_CUSTOM_VOLUME_STRUCT(_AUDIO_VER1_CUSTOM_VOLUME_STRUCT* result)
+{
+	if (result != NULL) {
+		memset(result, 0, sizeof(_AUDIO_VER1_CUSTOM_VOLUME_STRUCT));
+		result->audiovolume_ring[0][0]=112;
+		result->audiovolume_ring[0][1]=136;
+		result->audiovolume_ring[0][2]=160;
+		result->audiovolume_ring[0][3]=184;
+		result->audiovolume_ring[0][4]=208;
+		result->audiovolume_ring[0][5]=232;
+		result->audiovolume_ring[0][6]=255;
+		result->audiovolume_ring[1][0]=112;
+		result->audiovolume_ring[1][1]=136;
+		result->audiovolume_ring[1][2]=160;
+		result->audiovolume_ring[1][3]=184;
+		result->audiovolume_ring[1][4]=208;
+		result->audiovolume_ring[1][5]=232;
+		result->audiovolume_ring[1][6]=255;
+		result->audiovolume_ring[2][0]=100;
+		result->audiovolume_ring[2][1]=120;
+		result->audiovolume_ring[2][2]=140;
+		result->audiovolume_ring[2][3]=164;
+		result->audiovolume_ring[2][4]=200;
+		result->audiovolume_ring[2][5]=240;
+		result->audiovolume_ring[2][6]=255;
+		result->audiovolume_ring[3][0]=112;
+		result->audiovolume_ring[3][1]=136;
+		result->audiovolume_ring[3][2]=160;
+		result->audiovolume_ring[3][3]=184;
+		result->audiovolume_ring[3][4]=208;
+		result->audiovolume_ring[3][5]=232;
+		result->audiovolume_ring[3][6]=255;
+		
+		result->audiovolume_media[0][0]=112;
+		result->audiovolume_media[0][1]=136;
+		result->audiovolume_media[0][2]=160;
+		result->audiovolume_media[0][3]=184;
+		result->audiovolume_media[0][4]=208;
+		result->audiovolume_media[0][5]=232;
+		result->audiovolume_media[0][6]=255;
+		result->audiovolume_media[1][0]=160;
+		result->audiovolume_media[1][1]=176;
+		result->audiovolume_media[1][2]=192;
+		result->audiovolume_media[1][3]=208;
+		result->audiovolume_media[1][4]=224;
+		result->audiovolume_media[1][5]=240;
+		result->audiovolume_media[1][6]=255;
+		result->audiovolume_media[2][0]=60;
+		result->audiovolume_media[2][1]=80;
+		result->audiovolume_media[2][2]=120;
+		result->audiovolume_media[2][3]=160;
+		result->audiovolume_media[2][4]=200;
+		result->audiovolume_media[2][5]=240;
+		result->audiovolume_media[2][6]=255;
+		result->audiovolume_media[3][0]=104;
+		result->audiovolume_media[3][1]=128;
+		result->audiovolume_media[3][2]=152;
+		result->audiovolume_media[3][3]=176;
+		result->audiovolume_media[3][4]=200;
+		result->audiovolume_media[3][5]=224;
+		result->audiovolume_media[3][6]=248;
+
+		result->audiovolume_matv[0][0]=32;
+		result->audiovolume_matv[0][1]=64;
+		result->audiovolume_matv[0][2]=96;
+		result->audiovolume_matv[0][3]=128;
+		result->audiovolume_matv[0][4]=160;
+		result->audiovolume_matv[0][5]=192;
+		result->audiovolume_matv[1][0]=32;
+		result->audiovolume_matv[1][1]=64;
+		result->audiovolume_matv[1][2]=96;
+		result->audiovolume_matv[1][3]=128;
+		result->audiovolume_matv[1][4]=160;
+		result->audiovolume_matv[1][5]=192;
+		result->audiovolume_matv[2][0]=112;
+		result->audiovolume_matv[2][1]=136;
+		result->audiovolume_matv[2][2]=160;
+		result->audiovolume_matv[2][3]=184;
+		result->audiovolume_matv[2][4]=208;
+		result->audiovolume_matv[2][5]=232;
+		result->audiovolume_matv[2][6]=255;
+		result->audiovolume_matv[3][0]=43;
+		result->audiovolume_matv[3][1]=85;
+		result->audiovolume_matv[3][2]=128;
+		result->audiovolume_matv[3][3]=171;
+		result->audiovolume_matv[3][4]=213;
+		result->audiovolume_matv[3][5]=255;
+
+		result->audiovolume_sph[0][0]=68;
+		result->audiovolume_sph[0][1]=80;
+		result->audiovolume_sph[0][2]=92;
+		result->audiovolume_sph[0][3]=104;
+		result->audiovolume_sph[0][4]=116;
+		result->audiovolume_sph[0][5]=128;
+		result->audiovolume_sph[0][6]=140;
+		result->audiovolume_sph[1][0]=56;
+		result->audiovolume_sph[1][1]=68;
+		result->audiovolume_sph[1][2]=80;
+		result->audiovolume_sph[1][3]=92;
+		result->audiovolume_sph[1][4]=104;
+		result->audiovolume_sph[1][5]=116;
+		result->audiovolume_sph[1][6]=128;
+		result->audiovolume_sph[2][0]=68;
+		result->audiovolume_sph[2][1]=80;
+		result->audiovolume_sph[2][2]=92;
+		result->audiovolume_sph[2][3]=104;
+		result->audiovolume_sph[2][4]=116;
+		result->audiovolume_sph[2][5]=128;
+		result->audiovolume_sph[2][6]=140;
+		result->audiovolume_sph[3][0]=40;
+		result->audiovolume_sph[3][1]=52;
+		result->audiovolume_sph[3][2]=64;
+		result->audiovolume_sph[3][3]=76;
+		result->audiovolume_sph[3][4]=88;
+		result->audiovolume_sph[3][5]=100;
+		result->audiovolume_sph[3][6]=112;
+
+		result->audiovolume_mic[0][1]=112;
+		result->audiovolume_mic[0][2]=192;
+		result->audiovolume_mic[0][3]=144;
+		result->audiovolume_mic[0][4]=192;
+		result->audiovolume_mic[0][5]=192;
+		result->audiovolume_mic[0][6]=184;
+		result->audiovolume_mic[0][7]=184;
+		result->audiovolume_mic[0][8]=184;
+		result->audiovolume_mic[0][9]=184;
+		result->audiovolume_mic[0][10]=184;
+		result->audiovolume_mic[1][0]=255;
+		result->audiovolume_mic[1][1]=192;
+		result->audiovolume_mic[1][2]=192;
+		result->audiovolume_mic[1][3]=180;
+		result->audiovolume_mic[1][4]=192;
+		result->audiovolume_mic[1][5]=192;
+		result->audiovolume_mic[1][6]=196;
+		result->audiovolume_mic[1][7]=184;
+		result->audiovolume_mic[1][8]=184;
+		result->audiovolume_mic[1][9]=184;
+		result->audiovolume_mic[1][10]=184;
+		result->audiovolume_mic[2][0]=255;
+		result->audiovolume_mic[2][1]=208;
+		result->audiovolume_mic[2][2]=208;
+		result->audiovolume_mic[2][3]=180;
+		result->audiovolume_mic[2][4]=255;
+		result->audiovolume_mic[2][5]=208;
+		result->audiovolume_mic[2][6]=196;
+		result->audiovolume_mic[3][0]=255;
+		result->audiovolume_mic[3][1]=208;
+		result->audiovolume_mic[3][2]=208;
+		result->audiovolume_mic[3][3]=164;
+		result->audiovolume_mic[3][4]=255;
+		result->audiovolume_mic[3][5]=208;
+		result->audiovolume_mic[3][6]=172;
+
+		result->audiovolume_sid[0][2]=16;
+		result->audiovolume_sid[1][2]=32;		
+
+		result->audiovolume_fm[0][0]=16;
+		result->audiovolume_fm[0][1]=80;
+		result->audiovolume_fm[0][2]=112;
+		result->audiovolume_fm[0][3]=144;
+		result->audiovolume_fm[0][4]=176;
+		result->audiovolume_fm[0][5]=208;
+		result->audiovolume_fm[0][6]=240;
+		result->audiovolume_fm[1][0]=160;
+		result->audiovolume_fm[1][1]=176;
+		result->audiovolume_fm[1][2]=192;
+		result->audiovolume_fm[1][3]=208;
+		result->audiovolume_fm[1][4]=224;
+		result->audiovolume_fm[1][5]=240;
+		result->audiovolume_fm[1][6]=255;
+		result->audiovolume_fm[2][0]=60;
+		result->audiovolume_fm[2][1]=80;
+		result->audiovolume_fm[2][2]=120;
+		result->audiovolume_fm[2][3]=160;
+		result->audiovolume_fm[2][4]=200;
+		result->audiovolume_fm[2][5]=240;
+		result->audiovolume_fm[2][6]=255;
+		result->audiovolume_fm[3][0]=112;
+		result->audiovolume_fm[3][1]=136;
+		result->audiovolume_fm[3][2]=160;
+		result->audiovolume_fm[3][3]=184;
+		result->audiovolume_fm[3][4]=208;
+		result->audiovolume_fm[3][5]=232;
+		result->audiovolume_fm[3][6]=248;
+
+		result->audiovolume_sip[0][0]=112;
+		result->audiovolume_sip[0][1]=136;
+		result->audiovolume_sip[0][2]=160;
+		result->audiovolume_sip[0][3]=184;
+		result->audiovolume_sip[0][4]=208;
+		result->audiovolume_sip[0][5]=232;
+		result->audiovolume_sip[0][6]=255;
+		result->audiovolume_sip[0][0]=112;
+		result->audiovolume_sip[1][1]=136;
+		result->audiovolume_sip[1][2]=160;
+		result->audiovolume_sip[1][3]=184;
+		result->audiovolume_sip[1][4]=208;
+		result->audiovolume_sip[1][5]=232;
+		result->audiovolume_sip[1][6]=255;
+		result->audiovolume_sip[2][0]=112;
+		result->audiovolume_sip[2][1]=136;
+		result->audiovolume_sip[2][2]=160;
+		result->audiovolume_sip[2][3]=184;
+		result->audiovolume_sip[2][4]=208;
+		result->audiovolume_sip[2][5]=232;
+		result->audiovolume_sip[2][6]=255;
+  	result->audiovolume_sip[3][0]=43;
+		result->audiovolume_sip[3][1]=85;
+		result->audiovolume_sip[3][2]=128;
+		result->audiovolume_sip[3][3]=171;
+		result->audiovolume_sip[3][4]=213;
+		result->audiovolume_sip[3][5]=255;
+		
+		result->normalaudiovolume[0]=128;
+		result->normalaudiovolume[1]=128;
+		result->normalaudiovolume[2]=128;
+		result->normalaudiovolume[3]=128;
+		result->normalaudiovolume[4]=128;
+		result->normalaudiovolume[5]=128;
+
+		result->headsetaudiovolume[0]=112;
+		result->headsetaudiovolume[1]=148;
+		result->headsetaudiovolume[2]=148;
+		result->headsetaudiovolume[3]=148;
+		result->headsetaudiovolume[4]=148;
+		result->headsetaudiovolume[5]=148;
+
+		result->speakeraudiovolume[0]=160;
+		result->speakeraudiovolume[1]=144;
+		result->speakeraudiovolume[2]=144;
+		result->speakeraudiovolume[3]=144;
+		result->speakeraudiovolume[4]=144;
+		result->speakeraudiovolume[5]=144;
+
+		result->headsetspeakeraudiovolume[0]=132;
+		result->headsetspeakeraudiovolume[1]=120;
+		result->headsetspeakeraudiovolume[2]=132;
+		result->headsetspeakeraudiovolume[3]=132;
+		result->headsetspeakeraudiovolume[4]=132;
+		result->headsetspeakeraudiovolume[5]=132;
+		result->headsetspeakeraudiovolume[6]=132;
+		result->headsetspeakeraudiovolume[7]=132;
+
+		result->extampaudiovolume[0]=132;
+		result->extampaudiovolume[1]=132;
+		result->extampaudiovolume[2]=132;
+		result->extampaudiovolume[3]=132;
+		result->extampaudiovolume[4]=132;
+		result->extampaudiovolume[5]=132;
+	}
 }
 #endif //TARGET_MTK
 // Engle add for MTK, end
