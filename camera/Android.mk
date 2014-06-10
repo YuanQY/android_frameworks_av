@@ -23,6 +23,10 @@ LOCAL_SRC_FILES:= \
 	ProCamera.cpp \
 	CameraBase.cpp \
 
+ifeq ($(TARGET_BOARD_PLATFORM),MT6589)
+	LOCAL_SRC_FILES += MtkCameraParameters.cpp
+endif
+
 LOCAL_SHARED_LIBRARIES := \
 	libcutils \
 	libutils \
