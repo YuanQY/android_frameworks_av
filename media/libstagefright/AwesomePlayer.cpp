@@ -3793,4 +3793,14 @@ inline int64_t AwesomePlayer::getTimeOfDayUs() {
 
     return (int64_t)tv.tv_sec * 1000000 + tv.tv_usec;
 }
+
+// Engle, add for MTK, start
+#ifdef TARGET_MTK
+extern "C" void _ZN7android13AwesomePlayer24mtk_omx_get_current_timeEPx(long long* time) {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    (*time) = tv.tv_sec * 1000000 + tv.tv_usec;
+}
+#endif
+// Engle, add for MTK, end
 }  // namespace android
