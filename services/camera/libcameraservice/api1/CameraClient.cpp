@@ -15,7 +15,7 @@
  */
 
 #define LOG_TAG "CameraClient"
-//#define LOG_NDEBUG 0
+#define LOG_NDEBUG 0
 
 #include <cutils/properties.h>
 #include <gui/Surface.h>
@@ -593,6 +593,12 @@ status_t CameraClient::takePicture(int msgType) {
 #endif
                            CAMERA_MSG_COMPRESSED_IMAGE);
 
+// Engle, add for MTK, start
+#ifdef TARGET_MTK
+    picMsgType |= (MTK_CAMERA_MSG_EXT_NOTIFY | MTK_CAMERA_MSG_EXT_DATA);
+#endif
+// Engle, add for MTK, end
+
 #if defined(OMAP_ICS_CAMERA) || defined(OMAP_ENHANCEMENT_BURST_CAPTURE)
     picMsgType |= CAMERA_MSG_COMPRESSED_BURST_IMAGE;
 #endif
@@ -745,6 +751,7 @@ void CameraClient::disableMsgType(int32_t msgType) {
 #define CHECK_MESSAGE_INTERVAL 10 // 10ms
 bool CameraClient::lockIfMessageWanted(int32_t msgType) {
     int sleepCount = 0;
+
     while (mMsgEnabled & msgType) {
 #ifdef CAMERA_MSG_MGMT
         if ((msgType == CAMERA_MSG_PREVIEW_FRAME) &&
@@ -818,6 +825,10 @@ void CameraClient::notifyCallback(int32_t msgType, int32_t ext1,
             // ext1 is the dimension of the yuv picture.
             client->handleShutter();
             break;
+#ifdef TARGET_MTK
+        case MTK_CAMERA_MSG_EXT_NOTIFY:
+        	client->handleMtkExtNotify(ext1, ext2);
+#endif
         default:
             client->handleGenericNotify(msgType, ext1, ext2);
             break;
@@ -839,7 +850,11 @@ void CameraClient::dataCallback(int32_t msgType,
     if (!client->lockIfMessageWanted(msgType)) return;
     if (dataPtr == 0 && metadata == NULL) {
         ALOGE("Null data returned in data callback");
+#ifdef TARGET_MTK
+        client->handleGenericNotify(CAMERA_MSG_ERROR, MTK_CAMERA_MSG_EXT_DATA, 0);
+#else
         client->handleGenericNotify(CAMERA_MSG_ERROR, UNKNOWN_ERROR, 0);
+#endif
         return;
     }
 
@@ -856,6 +871,13 @@ void CameraClient::dataCallback(int32_t msgType,
         case CAMERA_MSG_COMPRESSED_IMAGE:
             client->handleCompressedPicture(dataPtr);
             break;
+
+#ifdef TARGET_MTK
+		case MTK_CAMERA_MSG_EXT_DATA:
+			client->handleMtkExtData(dataPtr, metadata);
+            break;
+#endif
+
 #if defined(OMAP_ICS_CAMERA) || defined(OMAP_ENHANCEMENT_BURST_CAPTURE)
         case CAMERA_MSG_COMPRESSED_BURST_IMAGE:
             client->handleCompressedBurstPicture(dataPtr);
@@ -1102,5 +1124,49 @@ int CameraClient::getOrientation(int degrees, bool mirror) {
     ALOGE("Invalid setDisplayOrientation degrees=%d", degrees);
     return -1;
 }
+
+// Engle, add for MTK, start
+#ifdef TARGET_MTK
+// picture callback - raw image ready
+void CameraClient::handleMtkExtNotify(int32_t ext1, int32_t ext2) {
+	ALOGD("MtkExtNotify: ext1=%d, ext2=%d", ext1, ext2);
+    sp<ICameraClient> c = mRemoteCallback;
+	switch(ext1) {
+		case 4:
+			handleShutter();
+			enableMsgType(CAMERA_MSG_SHUTTER);
+			break;
+		case 5:
+			break;
+		case 16:
+			disableMsgType(CAMERA_MSG_SHUTTER);
+			disableMsgType(CAMERA_MSG_COMPRESSED_IMAGE);
+			break;
+		case 17:
+			handleShutter();
+			break;
+		case MTK_CAMERA_MSG_EXT_NOTIFY_CONTINUOUS_END:
+			disableMsgType(CAMERA_MSG_SHUTTER);
+			disableMsgType(CAMERA_MSG_COMPRESSED_IMAGE);
+            mLock.unlock();
+            if (c != 0) {
+                c->notifyCallback(MTK_CAMERA_MSG_EXT_NOTIFY, ext1, ext2);
+            }
+			break;
+		default:
+            mLock.unlock();
+            if (c != 0) {
+                c->notifyCallback(MTK_CAMERA_MSG_EXT_NOTIFY, ext1, ext2);
+            }	
+            break;
+	}
+
+}
+
+void CameraClient::handleMtkExtData(const sp<IMemory>& dataPtr, camera_frame_metadata_t *metadata) {
+	handleCompressedPicture(dataPtr);
+}
+#endif
+// Engle, add for MTK, end
 
 }; // namespace android
