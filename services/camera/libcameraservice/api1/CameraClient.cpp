@@ -1136,7 +1136,9 @@ void CameraClient::handleMtkExtNotify(int32_t ext1, int32_t ext2) {
 			handleShutter();
 			enableMsgType(CAMERA_MSG_SHUTTER);
 			break;
-		case 5:
+		case MTK_CAMERA_MSG_EXT_NOTIFY_CONTINUOUS_SHUTTER:
+			handleShutter();			
+			enableMsgType(CAMERA_MSG_SHUTTER);
 			break;
 		case MTK_CAMERA_MSG_EXT_NOTIFY_CAPTURE_DONE:
 			disableMsgType(CAMERA_MSG_SHUTTER);
