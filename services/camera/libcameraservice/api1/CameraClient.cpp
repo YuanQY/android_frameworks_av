@@ -1132,17 +1132,17 @@ void CameraClient::handleMtkExtNotify(int32_t ext1, int32_t ext2) {
 	ALOGD("MtkExtNotify: ext1=%d, ext2=%d", ext1, ext2);
     sp<ICameraClient> c = mRemoteCallback;
 	switch(ext1) {
-		case 4:
+		case MTK_CAMERA_MSG_EXT_NOTIFY_BRUST_SHUTTER:
 			handleShutter();
 			enableMsgType(CAMERA_MSG_SHUTTER);
 			break;
 		case 5:
 			break;
-		case 16:
+		case MTK_CAMERA_MSG_EXT_NOTIFY_CAPTURE_DONE:
 			disableMsgType(CAMERA_MSG_SHUTTER);
 			disableMsgType(CAMERA_MSG_COMPRESSED_IMAGE);
 			break;
-		case 17:
+		case MTK_CAMERA_MSG_EXT_NOTIFY_SHUTTER:
 			handleShutter();
 			break;
 		case MTK_CAMERA_MSG_EXT_NOTIFY_CONTINUOUS_END:
