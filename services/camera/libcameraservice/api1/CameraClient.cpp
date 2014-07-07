@@ -1166,7 +1166,12 @@ void CameraClient::handleMtkExtNotify(int32_t ext1, int32_t ext2) {
 }
 
 void CameraClient::handleMtkExtData(const sp<IMemory>& dataPtr, camera_frame_metadata_t *metadata) {
-	handleCompressedPicture(dataPtr);
+	disableMsgType(CAMERA_MSG_COMPRESSED_IMAGE);
+	sp<ICameraClient> c = mRemoteCallback;
+    mLock.unlock();
+    if (c != 0) {
+        c->dataCallback(MTK_CAMERA_MSG_EXT_DATA, dataPtr, metadata);
+    }
 }
 #endif
 // Engle, add for MTK, end
