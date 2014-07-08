@@ -2094,6 +2094,11 @@ status_t OMXCodec::allocateBuffersOnPort(OMX_U32 portIndex) {
     if (err != OK) {
         return err;
     }
+#ifdef TARGET_MTK
+    if (def.nBufferSize % 512 != 0 && !strcmp("OMX.MTK.VIDEO.DECODER.MPEG4", mComponentName)) {
+    	def.nBufferSize = ((def.nBufferSize / 512 + 1) * 512);
+    }
+#endif
 
     CODEC_LOGI("allocating %lu buffers of size %lu on %s port",
             def.nBufferCountActual, def.nBufferSize,
