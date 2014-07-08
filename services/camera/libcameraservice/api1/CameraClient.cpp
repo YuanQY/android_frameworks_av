@@ -1177,11 +1177,11 @@ void CameraClient::handleMtkExtData(const sp<IMemory>& dataPtr, camera_frame_met
         uint32_t*const pData = (uint32_t*const)(((uint8_t *)heap->base()) + offset);
     	if (MTK_CAMERA_MSG_EXT_DATA_COMPRESSED_IMAGE == pData[0]) {
         	cpSize = size - (sizeof(uint32_t) << 1);
-            sp<MemoryHeapBase> previewBuffer = new MemoryHeapBase(cpSize, 0, NULL);
+            sp<MemoryHeapBase> imgBuffer = new MemoryHeapBase(cpSize, 0, NULL);
         
-            memcpy(previewBuffer->base(), &pData[2], cpSize);
+            memcpy(imgBuffer->base(), &pData[2], cpSize);
     
-            sp<MemoryBase> frame = new MemoryBase(previewBuffer, 0, cpSize);
+            sp<MemoryBase> frame = new MemoryBase(imgBuffer, 0, cpSize);
             c->dataCallback(CAMERA_MSG_COMPRESSED_IMAGE, frame, metadata);
         } else {
             ALOGE("Invalid handleMtkExtData 0x%08x", pData[0]);
